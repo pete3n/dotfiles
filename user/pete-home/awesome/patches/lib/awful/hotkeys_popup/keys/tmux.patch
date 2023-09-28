@@ -1,0 +1,26 @@
+--- a/lib/awful/hotkeys_popup/keys/tmux.lua
++++ b/lib/awful/hotkeys_popup/keys/tmux.lua
+@@ -81,8 +81,22 @@
+             ['?'] = "list shortcuts",
+             t     = "show clock"
+         }
++    }},
++
++    ["tmux: clipboard"] = {
++        {
++            modifiers = {"Ctrl", "Mod4"},
++            keys = {
++                c = "copy from tmux buffer to system clipboard"
++            }
++        },
++        {
++            modifiers = {"Ctrl", "Shift"},
++            keys = {
++                v = "paste from system clipboard to tmux buffer"
++            }
++        }
+     }}
+-}
+ 
+ hotkeys_popup.add_hotkeys(tmux_keys)
+ 
