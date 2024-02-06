@@ -1,6 +1,0 @@
-require("core.set")
-require("core.remaps")
-require("core.plugins")
-require("core.plugin_config")
-local colors = require('core.colors')
-colors.ColorPencils()
