@@ -16,10 +16,12 @@ require("collision")()
 local naughty = require("naughty")
 local menubar = require("menubar")
 local hotkeys_popup = require("awful.hotkeys_popup")
+
 -- Enable hotkeys help widget for VIM and other apps
 -- when client with a matching name is opened:
 require("awful.hotkeys_popup.keys")
 
+-- vim: filetype=lua:expandtab:shiftwidth=4:tabstop=8:softtabstop=4:textwidth=80
 -- {{{ Error handling
 -- Check if awesome encountered an error during startup and fell back to
 -- another config (This code will only ever execute for the fallback config)
@@ -254,14 +256,46 @@ root.buttons(gears.table.join(
 -- {{{ Key bindings
 globalkeys = gears.table.join(
 
+    awful.key({ modkey }, "d", function ()
+        
+        local rdp_window = nil
+        for _, c in ipairs(client.get()) do
+            if c.class == "org.remmina.Remmina" then
+                rdp_window = c
+                break
+            end
+        end
+        
+        if rdp_window then
+
+            if client.focus ~= rdp_window then
+                previous_window = client.focus
+            end
+
+            client.focus = rdp_window
+            rdp_window:raise()
+        end
+    end,
+    {description = "Focus RDP Window", group = "awesome"}),
+
+    awful.key({ modkey }, "e", function ()
+        if previous_window then
+            client.focus = previous_window
+            previous_window:raise()
+        end
+    end,
+    {description = "Focus on previous Window", group = "awesome"}),
+
     awful.key({ modkey, "Mod4", "Ctrl"}, "c", function () awful.spawn.with_shell("tcopy") end),
     -- Description stored in /usr/share/awesome/lib/awful/hotkeys_popup/keys/tmux.lua
     
     awful.key({ modkey, "Mod4", "Ctrl"}, "v", function () awful.spawn.with_shell("tpaste") end),
     -- Description stored in /usr/share/awesome/lib/awful/hotkeys_popup/keys/tmux.lua
-
-    awful.key({ modkey,           }, "s",      hotkeys_popup.show_help,
-              {description="show help", group="awesome"}),
+    awful.key({ modkey,             }, "s", function()
+        local ps_hotkeys = hotkeys_popup.show_ps_help() -- Add hotkey support to processes that don't have X windows
+        hotkeys_popup.show_help(nil, nil, nil, ps_hotkeys)
+        end,
+        {description="show help", group="awesome"}),
     awful.key({ modkey,           }, "=", function ()
 	    awful.screen.focused().systray.visible = not awful.screen.focused().systray.visible
             end,

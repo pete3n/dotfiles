@@ -248,5 +248,5 @@ local function load_ahk_files()
     end
 end
 
-load_ahk_files()
+-- load_ahk_files() 
 hotkeys_popup.add_hotkeys(nvim_keys)

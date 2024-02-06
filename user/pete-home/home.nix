@@ -15,7 +15,7 @@ in {
   
   home.username = "pete";
   home.homeDirectory = "/home/pete";
-  home.stateVersion = "23.05";
+  home.stateVersion = "unstable";
 
   home.packages = with pkgs; [
     # Terminal tools
@@ -29,7 +29,7 @@ in {
     cryptomator
     yubioath-flutter
     # Messaging
-    signal-desktop
+    unstable.signal-desktop # Frequent updates required; use unstable channel
     element-desktop
     # Crypto
     bisq-desktop

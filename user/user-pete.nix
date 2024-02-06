@@ -84,10 +84,23 @@ in {
     ${setupHomeManager} = homeManagerService;
   };
 
+
+
+  # Webdav service needed to mount Cryptomator volumes
+  services.davfs2.enable = true;
+
+  # Gnome gvfs service for Nautilus
+  services.gvfs.enable = true;
+
+  # Packages for the user that must be installed system wide
+  environment.systemPackages = with pkgs; [
+   bisq-desktop
+  ];
+
   # Define a user account. Don't forget to set a password with ‘passwd’
   users.users.${username} = {
      isNormalUser = true;
-     extraGroups = [ "wheel" ]; # Enable ‘sudo’ for the user.
+     extraGroups = [ "wheel" "davfs2" ]; # Enable ‘sudo’ for the user, and allow dav2fs mounting
 
      # User packages
      packages = with pkgs; [

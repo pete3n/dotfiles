@@ -10,15 +10,15 @@ let
     ${pkgs.flatpak}/bin/flatpak install -y flathub com.heroicgameslauncher.hgl
     ${pkgs.flatpak}/bin/flatpak install -y flathub com.usebottles.bottles
     ${pkgs.flatpak}/bin/flatpak install -y flathub com.skype.Client
-
+    ${pkgs.flatpak}/bin/flatpak install -y flathub network.bisq.Bisq
     ${pkgs.flatpak}/bin/flatpak install -y flathub org.onlyoffice.desktopeditors
   '';
 
 in {
   # Enable Flatpak, configure flathub repo, and install base Flatpaks
   services.flatpak.enable = true;
+  xdg.portal.extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
   xdg.portal.enable = true;
-  xdg.portal.extraPortals = [pkgs.xdg-desktop-portal-gtk ];
   systemd.services.setup-flatpaks = {
     description = "Setup system flatpaks";
     after = [ "network.target" ];
